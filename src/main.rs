@@ -24,7 +24,7 @@ async fn get_api_info() -> impl Responder {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     // Define the port
-    let port = env::var("PORT").unwrap_or_else(|_| "8080".to_string());
+    let port = env::var("PORT").unwrap_or_else(|_| "4444".to_string());
     let address = format!("127.0.0.1:{}", port);
 
     // Print the message
