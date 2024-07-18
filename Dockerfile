@@ -5,7 +5,7 @@ from rust:latest
 workdir /chatwave_api
 
 # copy the cargo.toml and cargo.lock files
-copy cargo.toml cargo.lock ./
+copy Cargo.toml Cargo.lock ./
 
 # build the application in release mode
 run cargo run
