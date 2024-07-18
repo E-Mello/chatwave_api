@@ -2,7 +2,7 @@ services:
   rust-api:
     build: .
     ports:
-      - "8080:8080"
+     - "4444:4444"
     environment:
       - RUST_LOG=info
       - PORT=8080
