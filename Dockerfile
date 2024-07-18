@@ -23,4 +23,4 @@ copy --from=builder /myapp/target/release/myapp /usr/local/bin/myapp
 expose 8080
 
 # run the application
-cmd ["chatwave_api"]
+cmd ["./target/debug/chatwave_api"]
