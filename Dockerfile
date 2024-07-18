@@ -1,29 +1,26 @@
-# Use the official Rust image as the base image
-FROM rust:1.67 as builder
+# use the official rust image as a base image
+from rust:1.60 as builder
 
-# Set the working directory inside the container
-WORKDIR /app
+# create a new empty shell project
+run user=root cargo new --bin myapp
+workdir /myapp
 
-# Copy the Cargo.toml and Cargo.lock files
-COPY Cargo.toml Cargo.lock ./
+# copy the cargo.toml and cargo.lock files
+copy cargo.toml cargo.lock ./
 
-# Copy the source code
-COPY src ./src
+# copy the source code from the github repository
+arg main_rs_url=https://raw.githubusercontent.com/E-Mello/chatwave_api/main/src/main.rs
+run curl -o src/main.rs $main_rs_url
 
-# Build the project for release
-RUN cargo build --release
+# build the application in release mode
+run cargo build --release
 
-# Use a smaller base image for the final stage
-FROM debian:buster-slim
+# create a smaller image to copy the binary
+from debian:buster-slim
+copy --from=builder /myapp/target/release/myapp /usr/local/bin/myapp
 
-# Set the working directory inside the container
-WORKDIR /app
+# expose the port that the application will run on
+expose 8080
 
-# Copy the built binary from the builder stage
-COPY --from=builder /app/target/release/chatwave_api .
-
-# Expose the port that your app will run on
-EXPOSE 8080
-
-# Set the command to run the application
-CMD ["./chatwave_api"]
+# run the application
+cmd ["chatwave_api"]
