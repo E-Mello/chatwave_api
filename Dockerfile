@@ -7,6 +7,9 @@ workdir /chatwave_api
 # copy the cargo.toml and cargo.lock files
 copy Cargo.toml Cargo.lock ./
 
+# Copy the rest of the application code
+copy . .
+
 # build the application in release mode
 # run cargo run
 
