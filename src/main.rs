@@ -1,6 +1,7 @@
 use actix_web::{web, App, HttpServer, Responder};
 use chrono::Utc;
 use serde::Serialize;
+use std::env;
 
 #[derive(Serialize)]
 struct ApiResponse {
@@ -22,8 +23,16 @@ async fn get_api_info() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    // Define the port
+    let port = env::var("PORT").unwrap_or_else(|_| "8080".to_string());
+    let address = format!("127.0.0.1:{}", port);
+
+    // Print the message
+    println!("The server is running on {}", address);
+
+    // Start the server
     HttpServer::new(|| App::new().route("/api", web::get().to(get_api_info)))
-        .bind("127.0.0.1:8080")?
+        .bind(&address)?
         .run()
         .await
 }
