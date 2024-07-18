@@ -8,7 +8,7 @@ workdir /chatwave_api
 copy Cargo.toml Cargo.lock ./
 
 # build the application in release mode
-run cargo run
+# run cargo run
 
 # run the application
 cmd ["cargo","run","build"]
